@@ -5,16 +5,18 @@ import "./style.css";
 const OnlineStatus = () => {
   const { online, firstEnter } = useOnlineStatus();
 
-  return firstEnter ? (
-    online ? (
-      <p className="text-center bg-green-500 text-white text-sm online-status">
+  if (!firstEnter) return null;
+
+  return (
+    <p
+      className={`text-center text-white text-sm ${
         online
-      </p>
-    ) : (
-      <p className="text-center bg-red-500 text-white text-sm">offline</p>
-    )
-  ) : (
-    <></>
+          ? "bg-green-500 online-status"
+          : "bg-red-500 offline-status"
+      }`}
+    >
+      {online ? "online" : "offline"}
+    </p>
   );
 };
 

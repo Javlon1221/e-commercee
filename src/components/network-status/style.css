@@ -1,8 +1,88 @@
-.online-status{
-    animation: OnlineStatus .01s  2s   forwards;
+/* ONLINE STATUS ANIMATSIYASI */
+.online-status {
+    animation: fadeInOut 4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+    box-shadow: 0 8px 24px rgba(67, 233, 123, 0.15), 0 1.5px 6px rgba(0,0,0,0.08);
+    border: none;
+    letter-spacing: 0.5px;
 }
-@keyframes OnlineStatus {
-    to{
-        display: none;
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        visibility: visible;
+        transform: translateY(20px) scale(0.95);
+        filter: blur(4px);
     }
+    15% {
+        opacity: 1;
+        transform: translateY(0) scale(1.02);
+        filter: blur(0);
+    }
+    85% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-20px) scale(0.98);
+        filter: blur(2px);
+    }
+}
+
+/* OFFLINE STATUS ANIMATSIYASI */
+.offline-status {
+    animation: fadeInOutOffline 4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    background: linear-gradient(90deg, #ff5858 0%, #f09819 100%);
+    box-shadow: 0 8px 24px rgba(255, 88, 88, 0.15), 0 1.5px 6px rgba(0,0,0,0.08);
+    border: none;
+    letter-spacing: 0.5px;
+}
+
+@keyframes fadeInOutOffline {
+    0% {
+        opacity: 0;
+        visibility: visible;
+        transform: translateY(-20px) scale(0.95);
+        filter: blur(4px);
+    }
+    15% {
+        opacity: 1;
+        transform: translateY(0) scale(1.02);
+        filter: blur(0);
+    }
+    85% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px) scale(0.98);
+        filter: blur(2px);
+    }
+}
+
+.online-status,
+.offline-status {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 14px 32px;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 17px;
+    z-index: 9999;
+    transition: box-shadow 0.3s cubic-bezier(0.4,0,0.2,1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    border: none;
+    outline: none;
+    -webkit-user-select: none;
+    user-select: none;
+    pointer-events: none;
 }
