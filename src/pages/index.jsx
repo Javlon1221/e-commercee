@@ -12,6 +12,7 @@ const Basket = lazy(() => import("./basket/Basket"));
 const Like = lazy(() => import("./like/Like"));
 const Login = lazy(() => import("./login/Login"));
 const Register = lazy(() => import("./register/Register"));
+const DetailPage = lazy(() => import("./detailPage/DetailPage"));
 
 const MainRouters = () => {
   const routes = useRoutes([
@@ -23,7 +24,7 @@ const MainRouters = () => {
         { path: "shop", element: <Suspense><Shop /></Suspense> },
         { path: "about", element: <Suspense><About /></Suspense> },
         { path: "contact", element: <Suspense><Contact /></Suspense> },
-        { path: "product/:id", element: <Suspense><div>detail</div></Suspense> },
+        { path: "product/:id", element: <Suspense><DetailPage /></Suspense> },
         { path: "profile", element: <Suspense><Profile /></Suspense> },
         { path: "basket", element: <Suspense><Basket /></Suspense> },
         { path: "like", element: <Suspense><Like /></Suspense> },
