@@ -10,6 +10,8 @@ import { HiOutlineMenu, HiX } from "react-icons/hi";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
     <header className="w-full h-[100px] flex justify-between items-center px-5 shadow-sm z-50 bg-white relative">
@@ -34,11 +36,45 @@ const Header = () => {
       </nav>
 
       {/* Icons */}
-      <div className="hidden md:flex gap-4 items-center">
-        <NavLink to="/profile" className="hover:scale-110 transition-transform"><CgProfile size={23} /></NavLink>
-        <button className="hover:scale-110 transition-transform"><BsSearch size={23} /></button>
-        <NavLink to="/like" className="hover:scale-110 transition-transform"><FaRegHeart size={23} /></NavLink>
-        <NavLink to="/basket" className="hover:scale-110 transition-transform"><SlBasket size={23} /></NavLink>
+      <div className="hidden md:flex gap-4 items-center relative">
+        {/* Profile icon with dropdown */}
+        <div className="relative">
+          <button
+            className="hover:scale-110 transition-transform"
+            onClick={() => setIsDropdownOpen(prev => !prev)}
+          >
+            <CgProfile size={23} />
+          </button>
+          {isDropdownOpen && (
+            <div className="absolute right-0 mt-2 w-36 bg-white shadow-lg border rounded-md z-50">
+              <NavLink
+                to="/profile"
+                onClick={() => setIsDropdownOpen(false)}
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                Profile
+              </NavLink>
+              <NavLink
+                to="/login"
+                onClick={() => setIsDropdownOpen(false)}
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                Login
+              </NavLink>
+            </div>
+          )}
+        </div>
+
+        {/* Search modal trigger */}
+        <button
+          className="hover:scale-110 transition-transform"
+          onClick={() => setIsSearchOpen(true)}
+        >
+          <BsSearch size={23} />
+        </button>
+
+        <NavLink to="/wishlist" className="hover:scale-110 transition-transform"><FaRegHeart size={23} /></NavLink>
+        <NavLink to="/cart" className="hover:scale-110 transition-transform"><SlBasket size={23} /></NavLink>
         <NavLink to="/login" className="hover:scale-110 transition-transform"><CiLogin size={23} /></NavLink>
       </div>
 
@@ -68,12 +104,29 @@ const Header = () => {
           {/* Mobile Icons */}
           <div className="flex gap-6 mt-4">
             <NavLink to="/profile"><CgProfile size={23} /></NavLink>
-            <NavLink to="/like"><FaRegHeart size={23} /></NavLink>
-            <NavLink to="/basket"><SlBasket size={23} /></NavLink>
+            <NavLink to="/wishlist"><FaRegHeart size={23} /></NavLink>
+            <NavLink to="/cart"><SlBasket size={23} /></NavLink>
             <NavLink to="/login"><CiLogin size={23} /></NavLink>
           </div>
         </div>
       </div>
+
+      {/* Search Modal */}
+      {isSearchOpen && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-[99]">
+          <div className="bg-white p-6 rounded-xl shadow-lg w-[90%] max-w-md">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold">Search</h3>
+              <button onClick={() => setIsSearchOpen(false)} className="text-xl">×</button>
+            </div>
+            <input
+              type="text"
+              placeholder="Search products..."
+              className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+          </div>
+        </div>
+      )}
     </header>
   );
 };
