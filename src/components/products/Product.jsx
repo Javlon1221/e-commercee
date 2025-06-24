@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import ProductItem from './ProductItem'
 
 const Skeleton = ({count}) => {
@@ -14,6 +15,10 @@ const Skeleton = ({count}) => {
   </>
 }
 
+Skeleton.propTypes = {
+  count: PropTypes.number.isRequired
+}
+
 const Products = ({data, loading, count}) => {
   return (
     <div className='grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-8 gap-3 container mx-auto'>
@@ -25,6 +30,11 @@ const Products = ({data, loading, count}) => {
       }
     </div>
   )
+}
+Products.propTypes = {
+  data: PropTypes.array,
+  loading: PropTypes.bool,
+  count: PropTypes.number
 }
 
 export default React.memo(Products)

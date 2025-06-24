@@ -3,26 +3,31 @@ import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleWishlist } from "@/redux/features/wishlist";
 import { addToCart } from "@/redux/features/cart";
+import { useNavigate } from "react-router-dom";
 
 const ProductItem = (product) => {
   const { id, title, brand, price, thumbnail, discountPercentage, stock } = product;
   const dispatch = useDispatch();
   const wishlist = useSelector((state) => state.wishlist.value);
   const isLiked = wishlist.some((item) => item.id === id);
+  const navigate = useNavigate();
 
   return (
     <div
-      className="container my-12 bg-white rounded-xl shadow-sm overflow-hidden group relative cursor-pointer transition duration-300 hover:scale-[1.02] hover:shadow-lg"
+      onClick={() => navigate(`/product/${id}`)}
+      className="bg-white rounded-xl shadow-sm overflow-hidden group relative cursor-pointer transition duration-300 hover:scale-[1.02] hover:shadow-lg"
     >
-      <div className="relative overflow-hidden">
+      <div className="relative">
         <img
           src={thumbnail}
           alt={title}
           className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
         />
 
-        {/* Hover Overlay */}
-        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center space-y-3">
+        <div
+          className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex justify-center items-center"
+          onClick={(e) => e.stopPropagation()}
+        >
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -34,7 +39,6 @@ const ProductItem = (product) => {
           </button>
         </div>
 
-        {/* Wishlist Icon */}
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -45,13 +49,12 @@ const ProductItem = (product) => {
           {isLiked ? <HeartFilled /> : <HeartOutlined />}
         </button>
 
-        {/* Discount Badge */}
         {discountPercentage >= 10 && (
           <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
             -{Math.round(discountPercentage)}%
           </span>
         )}
-        {/* Stock Badge */}
+
         {stock >= 100 && (
           <span className="absolute top-2 right-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
             New

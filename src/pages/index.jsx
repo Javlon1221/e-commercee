@@ -8,7 +8,6 @@ const Shop = lazy(() => import('./shop/Shop'));
 const About = lazy(() => import('./about/About'));
 const Contact = lazy(() => import('./contact/Contact'));
 const Profile = lazy(() => import('./profile/Profile'));
-const Basket = lazy(() => import('./basket/Basket'));
 const Wishlist = lazy(() => import('./wishlist/Wishlist'));
 const Login = lazy(() => import('./login/Login'));
 const Register = lazy(() => import('./register/Register'));
