@@ -7,7 +7,6 @@ import Products from "@/components/products/Product";
 import ShopHero from "./ShopHero";
 import ShopToolbar from "./ShopToolbar";
 
-// Animatsiya variantlari
 const fadeUp = {
   initial: { opacity: 0, y: 40 },
   animate: { opacity: 1, y: 0 },
@@ -35,7 +34,6 @@ const Shop = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero + Toolbar */}
       <motion.div {...fadeUp}>
         <ShopHero />
         <ShopToolbar />

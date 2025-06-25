@@ -4,7 +4,7 @@ import { SlidersHorizontal } from 'lucide-react';
 
 const ShopToolbar = ({ sort, setSort, limit, setLimit }) => {
   return (
-    <div className="bg-[#f9f3eb] py-3 px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-gray-200">
+    <div className=" bg-[#f9f3eb] py-3 px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-gray-200">
       <div className="flex items-center gap-4 text-sm text-gray-700">
         <button className="flex items-center gap-2">
           <SlidersHorizontal className="w-4 h-4" />
