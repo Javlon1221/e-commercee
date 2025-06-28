@@ -5,8 +5,15 @@ import { toggleWishlist } from "@/redux/features/wishlist";
 import { addToCart } from "@/redux/features/cart";
 import { useNavigate } from "react-router-dom";
 
-const ProductItem = (product) => {
-  const { id, title, brand, price, thumbnail, discountPercentage, stock } = product;
+const ProductItem = ({
+  id,
+  title,
+  brand,
+  price,
+  thumbnail,
+  discountPercentage,
+  stock,
+}) => {
   const dispatch = useDispatch();
   const wishlist = useSelector((state) => state.wishlist.value);
   const isLiked = wishlist.some((item) => item.id === id);
@@ -15,58 +22,63 @@ const ProductItem = (product) => {
   return (
     <div
       onClick={() => navigate(`/product/${id}`)}
-      className="bg-white rounded-xl shadow-sm overflow-hidden group relative cursor-pointer transition duration-300 hover:scale-[1.02] hover:shadow-lg"
+      className="bg-white rounded-2xl shadow-sm overflow-hidden group relative cursor-pointer hover:shadow-md transition-all duration-300"
     >
-      <div className="relative">
+      {/* Image & Overlay */}
+      <div className="relative w-full aspect-[4/3] overflow-hidden">
         <img
           src={thumbnail}
           alt={title}
-          className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
 
+        {/* Overlay: Add to cart */}
         <div
-          className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex justify-center items-center"
+          className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition duration-300 flex justify-center items-center"
           onClick={(e) => e.stopPropagation()}
         >
           <button
             onClick={(e) => {
               e.stopPropagation();
-              dispatch(addToCart(product));
+              dispatch(addToCart({ id, title, brand, price, thumbnail, discountPercentage, stock }));
             }}
-            className="bg-white text-black font-semibold py-2 px-4 rounded hover:bg-gray-100"
+            className="bg-white text-black font-semibold py-2 px-5 rounded-full hover:bg-gray-200 shadow-md transition"
           >
             Add to cart
           </button>
         </div>
 
+        {/* Wishlist Button */}
         <button
           onClick={(e) => {
             e.stopPropagation();
-            dispatch(toggleWishlist(product));
+            dispatch(toggleWishlist({ id, title, brand, price, thumbnail, discountPercentage, stock }));
           }}
-          className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center text-red-500 hover:scale-110 transition"
+          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white shadow-lg flex items-center justify-center text-red-500 hover:scale-110 transition"
         >
           {isLiked ? <HeartFilled /> : <HeartOutlined />}
         </button>
 
+        {/* Badges */}
         {discountPercentage >= 10 && (
-          <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
+          <span className="absolute top-3 left-3 bg-red-600 text-white text-[11px] font-semibold px-2 py-1 rounded-full">
             -{Math.round(discountPercentage)}%
           </span>
         )}
 
         {stock >= 100 && (
-          <span className="absolute top-2 right-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
+          <span className="absolute bottom-3 left-3 bg-green-500 text-white text-[11px] font-semibold px-2 py-1 rounded-full">
             New
           </span>
         )}
       </div>
 
+      {/* Product Info */}
       <div className="p-4">
-        <h3 className="text-md font-medium text-gray-800 truncate">{title}</h3>
-        <p className="text-sm text-gray-500 truncate">{brand}</p>
+        <h3 className="text-base font-semibold text-gray-800 truncate">{title}</h3>
+        <p className="text-sm text-gray-500 truncate mb-2">{brand}</p>
         <div className="flex items-center gap-2">
-          <span className="text-md font-semibold text-black">
+          <span className="text-lg font-bold text-black">
             ${Number(price).toLocaleString()}
           </span>
           {discountPercentage > 0 && (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Pagination } from "antd";
 import { motion } from "framer-motion";
@@ -17,18 +17,28 @@ const Shop = () => {
   const { getProduct } = useProduct();
   const [params, setParams] = useSearchParams();
 
+  const [sort, setSort] = useState(params.get("sort") || "default");
+  const [limit, setLimit] = useState(Number(params.get("pageSize")) || 16);
   const page = Number(params.get("page")) || 1;
-  const pageSize = Number(params.get("pageSize")) || 16;
 
-  const { data, isLoading } = getProduct({ limit: pageSize, skip: pageSize * (page - 1) });
+  // Update URL when sort or limit changes
+  useEffect(() => {
+    params.set("pageSize", limit);
+    params.set("sort", sort);
+    params.set("page", "1"); // always reset to page 1 on filter change
+    setParams(params);
+  }, [sort, limit]);
 
-  const handleChangePage = (page, pageS) => {
-    if (pageS !== pageSize) {
-      params.set("pageSize", pageS);
-      params.set("page", "1");
-    } else {
-      params.set("page", page);
-    }
+  // Query products
+  const { data, isLoading } = getProduct({
+    limit,
+    skip: limit * (page - 1),
+    sort,
+  });
+
+  const handleChangePage = (page, pageSize) => {
+    params.set("page", page);
+    params.set("pageSize", pageSize);
     setParams(params);
   };
 
@@ -36,7 +46,12 @@ const Shop = () => {
     <div className="min-h-screen bg-white">
       <motion.div {...fadeUp}>
         <ShopHero />
-        <ShopToolbar />
+        <ShopToolbar
+          sort={sort}
+          setSort={setSort}
+          limit={limit}
+          setLimit={setLimit}
+        />
       </motion.div>
 
       {/* Main Section */}
@@ -59,7 +74,7 @@ const Shop = () => {
           <Products
             data={data?.data?.products}
             loading={isLoading}
-            count={pageSize} 
+            count={limit}
           />
         </motion.div>
 
@@ -74,7 +89,7 @@ const Shop = () => {
             current={page}
             onChange={handleChangePage}
             total={data?.data?.total || 0}
-            pageSize={pageSize}
+            pageSize={limit}
           />
         </motion.div>
       </div>

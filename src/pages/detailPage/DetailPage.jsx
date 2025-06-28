@@ -33,7 +33,6 @@ const DetailPage = () => {
     retry: 1,
   });
 
-  // Related products (category asosida)
   const {
     data: relatedProducts,
     isLoading: relatedLoading,
@@ -50,7 +49,6 @@ const DetailPage = () => {
   if (isLoading || !data) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-12 grid md:grid-cols-2 gap-10 animate-pulse">
-        {/* Skeleton */}
         <Skeleton className="w-full h-[500px] rounded-xl" />
         <div>
           <Skeleton className="h-10 w-2/3 mb-2 rounded" />
@@ -68,7 +66,6 @@ const DetailPage = () => {
   return (
     <>
       <div className="max-w-7xl mx-auto px-4 py-12 grid md:grid-cols-2 gap-10">
-        {/* Image Gallery */}
         <div className="flex gap-4 flex-col md:flex-row">
           <div className="flex md:flex-col gap-4 md:mr-4 overflow-x-auto md:overflow-visible">
             {images.map((img, index) => (
@@ -94,7 +91,6 @@ const DetailPage = () => {
           />
         </div>
 
-        {/* Product Info */}
         <div>
           <h2 className="text-3xl font-semibold text-gray-900 mb-2">{data.title}</h2>
           <p className="text-xl text-red-600 font-bold mb-3">Rs. {Number(data.price).toLocaleString()}</p>
@@ -108,7 +104,6 @@ const DetailPage = () => {
 
           <p className="text-gray-700 mb-6 leading-relaxed">{data.description}</p>
 
-          {/* Colors */}
           <div className="mb-6">
             <span className="text-md font-medium">Color: </span>
             <div className="flex gap-3 mt-2">
@@ -125,19 +120,18 @@ const DetailPage = () => {
             </div>
           </div>
 
-          {/* Quantity */}
           <div className="mb-6">
             <span className="text-md font-medium">Quantity: </span>
-            <div className="flex items-center mt-2 border rounded overflow-hidden w-fit">
+            <div className="flex items-center mt-2 border rounded-lg overflow-hidden w-fit shadow-sm">
               <button
-                className="px-3 py-1 bg-gray-100 text-lg"
+                className="px-3 py-1 text-lg bg-gray-50 hover:bg-gray-200 transition-colors"
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
               >
                 -
               </button>
-              <span className="px-4 py-1">{quantity}</span>
+              <span className="px-4 py-1 bg-white">{quantity}</span>
               <button
-                className="px-3 py-1 bg-gray-100 text-lg"
+                className="px-3 py-1 text-lg bg-gray-50 hover:bg-gray-200 transition-colors"
                 onClick={() => setQuantity((q) => q + 1)}
               >
                 +
@@ -145,21 +139,20 @@ const DetailPage = () => {
             </div>
           </div>
 
-          {/* Cart & Wishlist */}
-          <div className="flex gap-4 mb-10">
+          <div className="flex flex-col sm:flex-row gap-4 mb-10">
             <button
               onClick={() => dispatch(addToCart({ ...data, quantity }))}
-              className="bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800 transition"
+              className="bg-black text-white px-6 py-3 rounded-md hover:bg-gray-800 transition duration-300 shadow"
             >
               Add To Cart
             </button>
             <button
               onClick={() => dispatch(toggleWishlist(data))}
-              className={`border px-6 py-2 rounded-md hover:bg-gray-100 transition ${
-                isLiked ? "bg-red-100 text-red-600 border-red-500" : ""
+              className={`border px-6 py-3 rounded-md hover:bg-gray-100 transition duration-300 ${
+                isLiked ? "bg-red-100 text-red-600 border-red-400" : "border-gray-300"
               }`}
             >
-              {isLiked ? "Remove from Wishlist ❤️" : "Add to Wishlist 🤍"}
+              {isLiked ? "❤️ Remove from Wishlist" : "🤍 Add to Wishlist"}
             </button>
           </div>
 
@@ -170,24 +163,22 @@ const DetailPage = () => {
           </ul>
         </div>
 
-        {/* Modal Zoom */}
         <Dialog open={isModalOpen} onClose={() => setIsModalOpen(false)} className="fixed z-50 inset-0">
           <div className="fixed inset-0 bg-black bg-opacity-50" />
           <div className="fixed inset-0 flex items-center justify-center p-4">
-            <Dialog.Panel className="relative bg-white rounded-lg overflow-hidden shadow-xl max-w-4xl w-full">
+            <Dialog.Panel className="relative bg-white rounded-xl overflow-hidden shadow-2xl max-w-4xl w-full animate-fadeIn">
               <button
-                className="absolute top-2 right-2 text-gray-500 hover:text-black"
+                className="absolute top-2 right-2 text-gray-500 hover:text-black transition"
                 onClick={() => setIsModalOpen(false)}
               >
                 <XMarkIcon className="h-6 w-6" />
               </button>
-              <img src={mainImage} alt="Zoomed" className="w-full object-contain max-h-[80vh]" />
+              <img src={mainImage} alt="Zoomed" className="w-full object-contain max-h-[80vh] p-4 rounded" />
             </Dialog.Panel>
           </div>
         </Dialog>
       </div>
 
-      {/* Related Products */}
       {relatedProducts && relatedProducts.length > 1 && (
         <div className="max-w-7xl mx-auto px-4 py-10">
           <h3 className="text-2xl font-semibold mb-6">Related Products</h3>

@@ -6,7 +6,7 @@ const Profile = () => {
     name: 'Javlonbek Jalilov',
     email: 'javlonbek@example.com',
     bio: 'Computer Science student at TKXIU. Passionate about AI and Web Development.',
-    avatar: viteLogo, // Profil rasmi
+    avatar: viteLogo, 
   };
 
   return (

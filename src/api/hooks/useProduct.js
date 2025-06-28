@@ -7,5 +7,17 @@ export const useProduct = () => {
         queryFn: ()=> api.get("/products", {params})
     })
 
-    return {getProduct}
+    const searchProduct = (searchTerm) => {
+        return useQuery({
+        queryKey: ["search", searchTerm],
+        queryFn: () => api.get("/products/search", { params: { q: searchTerm } }).then(res => res.data),
+        enabled: !!searchTerm,
+        });
+    };
+
+    
+
+    
+
+    return {getProduct, searchProduct}
 }
