@@ -1,7 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { useRoutes } from 'react-router-dom';
 
-// Lazy-loaded sahifalar
 const Layout = lazy(() => import('./layout/Layout'));
 const Home = lazy(() => import('./home/Home'));
 const Shop = lazy(() => import('./shop/Shop'));
@@ -13,8 +12,9 @@ const Login = lazy(() => import('./login/Login'));
 const Register = lazy(() => import('./register/Register'));
 const DetailPage = lazy(() => import('./detailPage/DetailPage'));
 const Cart = lazy(() => import('./cart/Cart'));
+const Checkout = lazy(() => import('./checkout/Checkout'));
+const NotFound = lazy(() => import('./notfound/NotFound'));
 
-// Loader komponent (sizning ilovangizda bor deb hisoblayapman)
 const Loader = () => <div className="p-10 text-center text-gray-500">Loading...</div>;
 
 const MainRouters = () => {
@@ -27,7 +27,7 @@ const MainRouters = () => {
         </Suspense>
       ),
       children: [
-        { index: true, element: <Home /> }, // "" o‘rniga `index: true`
+        { index: true, element: <Home /> },
         { path: 'home', element: <Home /> },
         { path: 'shop', element: <Shop /> },
         { path: 'about', element: <About /> },
@@ -38,6 +38,8 @@ const MainRouters = () => {
         { path: 'login', element: <Login /> },
         { path: 'register', element: <Register /> },
         { path: 'cart', element: <Cart /> },
+        { path: 'checkout', element: <Checkout /> },
+        { path: '*', element: <NotFound /> },
       ]
     }
   ]);

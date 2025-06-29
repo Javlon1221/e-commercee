@@ -1,9 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleWishlist } from "@/redux/features/wishlist";
 import { addToCart } from "@/redux/features/cart";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const ProductItem = ({
   id,
@@ -20,7 +22,10 @@ const ProductItem = ({
   const navigate = useNavigate();
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
       onClick={() => navigate(`/product/${id}`)}
       className="bg-white rounded-2xl shadow-sm overflow-hidden group relative cursor-pointer hover:shadow-md transition-all duration-300"
     >
@@ -34,7 +39,7 @@ const ProductItem = ({
 
         {/* Overlay: Add to cart */}
         <div
-          className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition duration-300 flex justify-center items-center"
+          className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition duration-300 flex justify-center items-center px-5"
           onClick={(e) => e.stopPropagation()}
         >
           <button
@@ -88,8 +93,17 @@ const ProductItem = ({
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
+};
+ProductItem.propTypes = {
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  title: PropTypes.string.isRequired,
+  brand: PropTypes.string.isRequired,
+  price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  thumbnail: PropTypes.string.isRequired,
+  discountPercentage: PropTypes.number.isRequired,
+  stock: PropTypes.number.isRequired,
 };
 
 export default ProductItem;

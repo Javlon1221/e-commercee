@@ -13,6 +13,7 @@ import {
   selectCartTotal,
 } from "@/redux/features/cartSelector";
 import CartHero from "./CartHero";
+import "../checkout/Checkout"
 
 const Cart = () => {
   const cart = useSelector(selectCartItems);
